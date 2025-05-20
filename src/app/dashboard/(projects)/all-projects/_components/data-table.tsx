@@ -28,12 +28,16 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { TProject } from "../_types";
 import { DeleteProjectDialog } from "./delete-project-dialog";
+import { useRouter } from "next/navigation";
+import { deleteProject } from "../_actions";
+import { toast } from "sonner";
 
 interface DataTableProps {
   data: TProject[];
 }
 
 export function DataTable({ data }: DataTableProps) {
+  const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -172,12 +176,13 @@ export function DataTable({ data }: DataTableProps) {
 
   const handleEdit = (project: TProject) => {
     // Implement edit functionality
-    console.log("Edit project:", project);
+    router.push(`/dashboard/edit-project/${project.id}`);
   };
 
-  const handleDelete = (project: TProject) => {
+  const handleDelete = async (project: TProject) => {
     // Implement delete functionality
-    console.log("Delete project:", project);
+    const res = await deleteProject(project.id);
+    toast.success("Project deleted successfully")
     setDeleteDialogOpen(false);
   };
 
