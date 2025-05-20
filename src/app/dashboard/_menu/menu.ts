@@ -2,52 +2,52 @@ export const menuItems = {
   ADMIN: [
     {
       title: "Projects",
-      url: "/dashboard/rental-house",
+      // url: "/dashboard/rental-house",
       isActive: true,
       items: [
         {
           title: "All Projects",
-          url: "/dashboard/rental-house/create",
+          url: "/dashboard/all-projects",
         },
         {
           title: "Create Project",
-          url: "/dashboard/rental-house/create",
+          url: "/dashboard/create-project",
         },
       ],
     },
     {
       title: "Blogs",
-      url: "/dashboard/rental-house",
+      // url: "/dashboard/rental-house",
       isActive: true,
       items: [
         {
           title: "All Blogs",
-          url: "/dashboard/rental-house/create",
+          url: "/dashboard/all-blogs",
         },
         {
           title: "Create Blog",
-          url: "/dashboard/rental-house/create",
+          url: "/dashboard/create-blog",
         },
       ],
     },
     {
       title: "Skills",
-      url: "/dashboard/rental-house",
+      // url: "/dashboar",
       isActive: true,
       items: [
         {
           title: "All Skills",
-          url: "/dashboard/rental-house/create",
+          url: "/dashboard/all-skills",
         },
         {
           title: "Create Skill",
-          url: "/dashboard/rental-house/create",
+          url: "/dashboard/create-skill",
         },
       ],
     },
     {
       title: "Messages",
-      url: "/dashboard/messages",
+      // url: "/dashboard/messages",
       items: [{ title: "Message", url: "/dashboard/messages" }],
     },
   ],

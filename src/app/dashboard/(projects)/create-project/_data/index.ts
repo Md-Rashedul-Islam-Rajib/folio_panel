@@ -1,0 +1,22 @@
+export const technologies = [
+    "HTML",
+    "CSS",
+    "Tailwind CSS",
+    "JavaScript",
+    "React",
+    "TypeScript",
+    "ShadCN",
+    "Framer Motion",
+    "GSAP",
+    "ThreeJS",
+    "NodeJs",
+    "Express",
+    "MongoDB",
+    "Mongoose",
+    "MySQL",
+    "PostgreSQL",
+    "Prisma",
+    "Docker",
+    "AWS",
+    "GraphQL"
+]
