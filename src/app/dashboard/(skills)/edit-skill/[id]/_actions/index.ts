@@ -3,14 +3,14 @@
 import { revalidateTag } from "next/cache";
 
 
-export const getSingleBlogs = async (id:string) => {
+export const getSingleSkill = async (id:string) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER!}/blogs/${id}`,
+      `${process.env.NEXT_PUBLIC_SERVER!}/skills/${id}`,
       {
         method: "GET",
         next: {
-          tags: ["BLOGS"],
+          tags: ["SKILLS"],
         },
       }
     );
@@ -24,21 +24,21 @@ export const getSingleBlogs = async (id:string) => {
   }
 };
 
-export const updateBlog = async (
+export const updateSkill = async (
   id: string,
-  payload: FormData
+    payload: FormData
+  
 ) => {
-  try {
+    try {
+      
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER!}/blogs/${id}`,
+      `${process.env.NEXT_PUBLIC_SERVER!}/skills/${id}`,
       {
         method: "PUT",
-        
         body: payload,
       }
     );
-
-    revalidateTag("BLOGS");
+    revalidateTag("SKILLS");
     const data = await res.json();
     return data;
   } catch (err) {

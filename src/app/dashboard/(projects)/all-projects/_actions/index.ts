@@ -18,14 +18,16 @@ export const getAllProjects = async () => {
     const data = await res.json();
     
     return data;
-  } catch (error: any) {
-    return Error(error);
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    }
   }
 };
 
 export const updateProject = async (
   id: string,
-  payload: any
+  payload: FormData
 ) => {
   try {
     const res = await fetch(
@@ -42,8 +44,10 @@ export const updateProject = async (
     revalidateTag("PROJECTS");
     const data = await res.json();
     return data;
-  } catch (error: any) {
-    return Error(error);
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    }
   }
 };
 
@@ -56,7 +60,9 @@ export const deleteProject = async (id: string) => {
 revalidateTag("PROJECTS");
     const data = await res.json();
     return data.data;
-  } catch (error: any) {
-    return Error(error);
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    }
   }
 };

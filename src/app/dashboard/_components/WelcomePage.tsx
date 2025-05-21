@@ -1,7 +1,7 @@
 "use client"
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
-import { LoaderCircle } from "lucide-react";
+
+import React from "react";
+
 
 
 const WelcomePage = () => {

@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { Controller, FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import TGImageUploader from "@/components/ui/TGImageUploader";
@@ -107,9 +107,10 @@ const EditProjectForm = ({
         } else {
           toast.error(res?.message);
         }
-      } catch (err: any) {
-        console.error(err);
-        toast.error("Failed to create project");
+      } catch (err) {
+        if (err instanceof Error) {
+          console.error(err.message);
+        }
       }
     };
   

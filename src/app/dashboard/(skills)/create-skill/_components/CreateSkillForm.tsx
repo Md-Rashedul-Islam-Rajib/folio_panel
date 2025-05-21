@@ -58,9 +58,10 @@ const CreateSkillForm = () => {
       } else {
         toast.error(res?.message);
       }
-    } catch (err: any) {
-      console.error(err);
-      toast.error("Failed to create skill");
+    } catch (err){
+      if (err instanceof Error) {
+        console.error(err.message);
+      }
     }
   };
 

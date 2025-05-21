@@ -22,7 +22,7 @@ export function NavMain({
 }: {
   items: {
     title: string;
-    url: string;
+    url?: string;
     icon?: string;
     isActive?: boolean;
     items?: {

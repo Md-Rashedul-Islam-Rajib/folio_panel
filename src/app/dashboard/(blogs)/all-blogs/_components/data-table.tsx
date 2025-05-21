@@ -31,7 +31,7 @@ import { DeleteBlogDialog } from "./delete-blog-dialog";
 import { deleteBlog } from "../_actions";
 
 
-interface Blog {
+export interface Blog {
   id: string;
   title: string;
   content: string;
@@ -171,7 +171,7 @@ export function DataTable({ data }: DataTableProps) {
   };
 
   const handleDelete = async (blog: Blog) => {
-    const res = await deleteBlog(blog.id)
+await deleteBlog(blog.id)
     toast.success("Blog deleted successfully");
     setDeleteDialogOpen(false);
   };

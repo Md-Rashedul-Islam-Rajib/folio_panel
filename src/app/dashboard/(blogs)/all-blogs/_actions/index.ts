@@ -18,14 +18,16 @@ export const getAllBlogs = async () => {
     const data = await res.json();
     
     return data;
-  } catch (error: any) {
-    return Error(error);
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    }
   }
 };
 
 export const updateBlog = async (
   id: string,
-  payload: any
+  payload: FormData
 ) => {
   try {
     const res = await fetch(
@@ -40,9 +42,10 @@ export const updateBlog = async (
     revalidateTag("BLOGS");
     const data = await res.json();
     return data;
-  } catch (error: any) {
-    return Error(error);
+  } catch (err) {if(err instanceof Error) {
+    console.error(err.message);
   }
+}
 };
 
 export const deleteBlog = async (id: string) => {
@@ -54,7 +57,9 @@ export const deleteBlog = async (id: string) => {
 revalidateTag("BLOGS");
     const data = await res.json();
     return data.data;
-  } catch (error: any) {
-    return Error(error);
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    }
   }
 };

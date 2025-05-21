@@ -181,7 +181,7 @@ export function DataTable({ data }: DataTableProps) {
 
   const handleDelete = async (project: TProject) => {
     // Implement delete functionality
-    const res = await deleteProject(project.id);
+    await deleteProject(project.id);
     toast.success("Project deleted successfully")
     setDeleteDialogOpen(false);
   };

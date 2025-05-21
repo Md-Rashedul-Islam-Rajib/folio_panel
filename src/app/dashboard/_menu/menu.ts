@@ -45,10 +45,10 @@ export const menuItems = {
         },
       ],
     },
-    {
-      title: "Messages",
-      // url: "/dashboard/messages",
-      items: [{ title: "Message", url: "/dashboard/messages" }],
-    },
+    // {
+    //   // title: "Messages",
+    //   // url: "/dashboard/messages",
+    //   // items: [{ title: "Message", url: "/dashboard/messages" }],
+    // },
   ],
 };

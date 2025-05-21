@@ -1,7 +1,6 @@
 "use client";
 import Code from "@tiptap/extension-code";
 import Blockquote from "@tiptap/extension-blockquote";
-import Heading from "@tiptap/extension-heading";
 import Strike from "@tiptap/extension-strike";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import { Button } from "@/components/ui/button";
@@ -15,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { type FieldValues, type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -109,9 +108,14 @@ const EditBlogForm = ({
       } else {
         toast.error(res?.message);
       }
-    } catch (err: any) {
-      console.error(err);
-      toast.error("Failed to create blog");
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(err.message);
+        toast.error(err.message || "Failed to create blog");
+      } else {
+        console.error(err);
+        toast.error("Failed to create blog");
+      }
     }
   };
 
@@ -147,7 +151,7 @@ const EditBlogForm = ({
             <FormField
               control={form.control}
               name="content"
-              render={({ field }) => (
+              render={({}) => (
                 <FormItem>
                   <FormLabel>Content:</FormLabel>
                   <FormControl>

@@ -70,10 +70,10 @@ const CreateProjectForm = () => {
       } else {
         toast.error(res?.message);
       }
-    } catch (err: any) {
-      console.error(err);
-      toast.error("Failed to create project");
+    } catch (err) {if(err instanceof Error) {
+      console.error(err.message);
     }
+  }
   };
 
   return (

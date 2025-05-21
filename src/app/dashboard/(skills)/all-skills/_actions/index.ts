@@ -18,14 +18,16 @@ export const getAllSkills = async () => {
     const data = await res.json();
     
     return data;
-  } catch (error: any) {
-    return Error(error);
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    }
   }
 };
 
 export const updateSkill = async (
   id: string,
-  payload: any
+  payload: FormData
 ) => {
   try {
     const res = await fetch(
@@ -40,8 +42,10 @@ export const updateSkill = async (
     revalidateTag("SKILLS");
     const data = await res.json();
     return data;
-  } catch (error: any) {
-    return Error(error);
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    }
   }
 };
 
@@ -54,7 +58,9 @@ export const deleteSkill = async (id: string) => {
 revalidateTag("SKILLS");
     const data = await res.json();
     return data.data;
-  } catch (error: any) {
-    return Error(error);
+  } catch (err){
+    if (err instanceof Error) {
+      console.error(err.message);
+    }
   }
 };

@@ -17,8 +17,10 @@ export const getSingleProjects = async (id:string) => {
 
     const data = await res.json();
     return data;
-  } catch (error: any) {
-    return Error(error);
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    }
   }
 };
 
@@ -39,7 +41,9 @@ export const updateProject = async (
     revalidateTag("PROJECTS");
     const data = await res.json();
     return data;
-  } catch (error: any) {
-    return Error(error);
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    }
   }
 };

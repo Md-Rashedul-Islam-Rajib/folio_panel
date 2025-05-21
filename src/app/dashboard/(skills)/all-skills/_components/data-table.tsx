@@ -32,7 +32,7 @@ import { deleteSkill } from "../_actions";
 import { DeleteSkillDialog } from "./delete-skill-dialog";
 
 
-interface Skill {
+export interface Skill {
   id: string;
   name: string;
   icon: string[];
@@ -168,9 +168,7 @@ export function DataTable({ data }: DataTableProps) {
   };
 
   const handleDelete = async (skill: Skill) => {
-    // Implement delete functionality
-    // Replace with your actual delete function
-    const res = await deleteSkill(skill.id)
+    await deleteSkill(skill.id)
     toast.success("Technology deleted successfully");
     setDeleteDialogOpen(false);
   };
