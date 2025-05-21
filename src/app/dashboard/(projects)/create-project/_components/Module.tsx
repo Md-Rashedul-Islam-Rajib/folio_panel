@@ -1,10 +1,10 @@
 import React from 'react'
-import CreateProjectForm from './CreateProjectForm';
+import CreateBlogForm from '@/app/dashboard/(blogs)/create-blog/_components/CreateBlogForm';
 
 const CreateBlogModule = () => {
   return (
     <div>
-      <CreateProjectForm />
+      <CreateBlogForm />
     </div>
   );
 }
