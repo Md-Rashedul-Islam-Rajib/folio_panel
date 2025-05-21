@@ -83,26 +83,26 @@ const EditProjectForm = ({
     } = form;
   
   const handleProjectSubmit: SubmitHandler<FieldValues> = async (data) => {
-      console.log({data})
-      if (imageFiles?.length < 0) {
-        toast.error("Please select at least 1 image!");
-        return;
-      }
+      
+      // if (imageFiles?.length < 0) {
+      //   toast.error("Please select at least 1 image!");
+      //   return;
+      // }
   
       const formData = new FormData();
       formData.append("data", JSON.stringify(data));
       for (const file of imageFiles) {
         formData.append("images", file);
       }
-  for (const [key, value] of formData.entries()) {
-    console.log(`${key}:`, value);
-  }
+  // for (const [key, value] of formData.entries()) {
+  //   console.log(`${key}:`, value);
+  // }
   
       try {
         const res = await updateProject(project.id, formData);
         console.log(res)
         if (res?.success) {
-          toast.success(res?.message);
+          toast.success("Project updated successfully");
           router.push(`/dashboard/all-projects`);
         } else {
           toast.error(res?.message);

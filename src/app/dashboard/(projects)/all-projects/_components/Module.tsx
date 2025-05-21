@@ -3,7 +3,7 @@ import { getAllProjects } from '../_actions'
 import ProjectTable from './ProjectTable';
 
 const AllProjectsModule = async () => {
-    const projects = await getAllProjects();
+  const projects = await getAllProjects();
   return (
     <div>
       <ProjectTable data={projects?.data} />

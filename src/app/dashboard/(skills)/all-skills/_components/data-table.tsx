@@ -26,14 +26,21 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import { TProject } from "../_types";
-import { DeleteProjectDialog } from "./delete-project-dialog";
 import { useRouter } from "next/navigation";
-import { deleteProject } from "../_actions";
 import { toast } from "sonner";
+import { deleteSkill } from "../_actions";
+import { DeleteSkillDialog } from "./delete-skill-dialog";
+
+
+interface Skill {
+  id: string;
+  name: string;
+  icon: string[];
+  category: string;
+}
 
 interface DataTableProps {
-  data: TProject[];
+  data: Skill[];
 }
 
 export function DataTable({ data }: DataTableProps) {
@@ -43,60 +50,59 @@ export function DataTable({ data }: DataTableProps) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [projectToDelete, setProjectToDelete] = useState<TProject | null>(null);
+  const [skillToDelete, setSkillToDelete] =
+    useState<Skill | null>(null);
 
-  const columns: ColumnDef<TProject>[] = [
+  const columns: ColumnDef<Skill>[] = [
     {
-      accessorKey: "title",
+      accessorKey: "name",
       header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Title
+            Name
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
       cell: ({ row }) => (
-        <div className="font-medium">{row.getValue("title")}</div>
+        <div className="font-medium">{row.getValue("name")}</div>
       ),
     },
     {
-      accessorKey: "description",
-      header: "Description",
-      cell: ({ row }) => {
-        const description = row.getValue("description") as string;
-        return <div className="max-w-[300px] truncate">{description}</div>;
-      },
-    },
-    {
-      accessorKey: "techStack",
-      header: "Tech Stack",
-      cell: ({ row }) => {
-        const techStack = row.original.techStack;
+      accessorKey: "category",
+      header: ({ column }) => {
         return (
-          <div className="flex flex-wrap gap-1">
-            {techStack?.map((tech, index) => (
-              <Badge key={index} variant="outline" className="text-xs">
-                {tech}
-              </Badge>
-            ))}
-          </div>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Category
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        const category = row.getValue("category") as string;
+        return (
+          <Badge variant="outline" className="capitalize">
+            {category}
+          </Badge>
         );
       },
     },
     {
-      accessorKey: "imageUrl",
-      header: "Image",
+      accessorKey: "icon",
+      header: "Icon",
       cell: ({ row }) => {
-        const imageUrl = row.original.imageUrl?.[0] ?? "/placeholder.svg";
+        const iconUrl = row.original.icon?.[0] ?? "/placeholder.svg";
         return (
           <div className="relative h-10 w-10">
             <Image
-              src={imageUrl || "/placeholder.svg"}
-              alt={row.original.title}
+              src={iconUrl || "/placeholder.svg"}
+              alt={row.original.name}
               fill
               className="rounded-md object-cover"
             />
@@ -105,34 +111,16 @@ export function DataTable({ data }: DataTableProps) {
       },
     },
     {
-      accessorKey: "createdAt",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Created At
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-      cell: ({ row }) => {
-        const date = new Date(row.getValue("createdAt"));
-        return <div>{date.toLocaleDateString()}</div>;
-      },
-    },
-    {
       id: "actions",
       cell: ({ row }) => {
-        const project = row.original;
+        const skill = row.original;
 
         return (
           <div className="flex items-center justify-end gap-2">
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => handleEdit(project)}
+              onClick={() => handleEdit(skill)}
             >
               <Pencil className="h-4 w-4" />
               <span className="sr-only">Edit</span>
@@ -142,7 +130,7 @@ export function DataTable({ data }: DataTableProps) {
               size="icon"
               className="text-destructive hover:text-destructive/90"
               onClick={() => {
-                setProjectToDelete(project);
+                setSkillToDelete(skill);
                 setDeleteDialogOpen(true);
               }}
             >
@@ -174,15 +162,16 @@ export function DataTable({ data }: DataTableProps) {
     },
   });
 
-  const handleEdit = (project: TProject) => {
+  const handleEdit = (skill: Skill) => {
     // Implement edit functionality
-    router.push(`/dashboard/edit-project/${project.id}`);
+    router.push(`/dashboard/edit-skill/${skill.id}`);
   };
 
-  const handleDelete = async (project: TProject) => {
+  const handleDelete = async (skill: Skill) => {
     // Implement delete functionality
-    const res = await deleteProject(project.id);
-    toast.success("Project deleted successfully")
+    // Replace with your actual delete function
+    const res = await deleteSkill(skill.id)
+    toast.success("Technology deleted successfully");
     setDeleteDialogOpen(false);
   };
 
@@ -190,10 +179,10 @@ export function DataTable({ data }: DataTableProps) {
     <div className="space-y-4">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter projects..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter skills..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -273,12 +262,12 @@ export function DataTable({ data }: DataTableProps) {
         </div>
       </div>
 
-      {projectToDelete && (
-        <DeleteProjectDialog
+      {skillToDelete && (
+        <DeleteSkillDialog
           open={deleteDialogOpen}
           onOpenChange={setDeleteDialogOpen}
-          project={projectToDelete}
-          onConfirm={() => handleDelete(projectToDelete)}
+          skill={skillToDelete}
+          onConfirm={() => handleDelete(skillToDelete)}
         />
       )}
     </div>

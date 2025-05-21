@@ -24,16 +24,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import { TProject } from "../_types";
-import { DeleteProjectDialog } from "./delete-project-dialog";
 import { useRouter } from "next/navigation";
-import { deleteProject } from "../_actions";
 import { toast } from "sonner";
+import { DeleteBlogDialog } from "./delete-blog-dialog";
+import { deleteBlog } from "../_actions";
+
+
+interface Blog {
+  id: string;
+  title: string;
+  content: string;
+  coverImage: string[];
+  createdAt: string;
+}
 
 interface DataTableProps {
-  data: TProject[];
+  data: Blog[];
 }
 
 export function DataTable({ data }: DataTableProps) {
@@ -43,9 +50,9 @@ export function DataTable({ data }: DataTableProps) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [projectToDelete, setProjectToDelete] = useState<TProject | null>(null);
+  const [blogToDelete, setBlogToDelete] = useState<Blog | null>(null);
 
-  const columns: ColumnDef<TProject>[] = [
+  const columns: ColumnDef<Blog>[] = [
     {
       accessorKey: "title",
       header: ({ column }) => {
@@ -64,38 +71,22 @@ export function DataTable({ data }: DataTableProps) {
       ),
     },
     {
-      accessorKey: "description",
-      header: "Description",
+      accessorKey: "content",
+      header: "Content",
       cell: ({ row }) => {
-        const description = row.getValue("description") as string;
-        return <div className="max-w-[300px] truncate">{description}</div>;
+        const content = row.getValue("content") as string;
+        return <div className="max-w-[300px] truncate">{content}</div>;
       },
     },
     {
-      accessorKey: "techStack",
-      header: "Tech Stack",
+      accessorKey: "coverImage",
+      header: "Cover Image",
       cell: ({ row }) => {
-        const techStack = row.original.techStack;
-        return (
-          <div className="flex flex-wrap gap-1">
-            {techStack?.map((tech, index) => (
-              <Badge key={index} variant="outline" className="text-xs">
-                {tech}
-              </Badge>
-            ))}
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "imageUrl",
-      header: "Image",
-      cell: ({ row }) => {
-        const imageUrl = row.original.imageUrl?.[0] ?? "/placeholder.svg";
+        const coverImage = row.original.coverImage?.[0] ?? "/placeholder.svg";
         return (
           <div className="relative h-10 w-10">
             <Image
-              src={imageUrl || "/placeholder.svg"}
+              src={coverImage || "/placeholder.svg"}
               alt={row.original.title}
               fill
               className="rounded-md object-cover"
@@ -125,14 +116,14 @@ export function DataTable({ data }: DataTableProps) {
     {
       id: "actions",
       cell: ({ row }) => {
-        const project = row.original;
+        const blog = row.original;
 
         return (
           <div className="flex items-center justify-end gap-2">
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => handleEdit(project)}
+              onClick={() => handleEdit(blog)}
             >
               <Pencil className="h-4 w-4" />
               <span className="sr-only">Edit</span>
@@ -142,7 +133,7 @@ export function DataTable({ data }: DataTableProps) {
               size="icon"
               className="text-destructive hover:text-destructive/90"
               onClick={() => {
-                setProjectToDelete(project);
+                setBlogToDelete(blog);
                 setDeleteDialogOpen(true);
               }}
             >
@@ -174,15 +165,14 @@ export function DataTable({ data }: DataTableProps) {
     },
   });
 
-  const handleEdit = (project: TProject) => {
+  const handleEdit = (blog: Blog) => {
     // Implement edit functionality
-    router.push(`/dashboard/edit-project/${project.id}`);
+    router.push(`/dashboard/edit-blog/${blog.id}`);
   };
 
-  const handleDelete = async (project: TProject) => {
-    // Implement delete functionality
-    const res = await deleteProject(project.id);
-    toast.success("Project deleted successfully")
+  const handleDelete = async (blog: Blog) => {
+    const res = await deleteBlog(blog.id)
+    toast.success("Blog deleted successfully");
     setDeleteDialogOpen(false);
   };
 
@@ -190,7 +180,7 @@ export function DataTable({ data }: DataTableProps) {
     <div className="space-y-4">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter projects..."
+          placeholder="Filter blogs..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
@@ -273,12 +263,12 @@ export function DataTable({ data }: DataTableProps) {
         </div>
       </div>
 
-      {projectToDelete && (
-        <DeleteProjectDialog
+      {blogToDelete && (
+        <DeleteBlogDialog
           open={deleteDialogOpen}
           onOpenChange={setDeleteDialogOpen}
-          project={projectToDelete}
-          onConfirm={() => handleDelete(projectToDelete)}
+          blog={blogToDelete}
+          onConfirm={() => handleDelete(blogToDelete)}
         />
       )}
     </div>

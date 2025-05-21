@@ -1,12 +1,12 @@
 import React from 'react'
-import CreateProjectForm from './CreateProjectForm'
+import CreateProjectForm from './CreateProjectForm';
 
-const CreateProjectModule = () => {
+const CreateBlogModule = () => {
   return (
     <div>
       <CreateProjectForm />
     </div>
-  )
+  );
 }
 
-export default CreateProjectModule
+export default CreateBlogModule

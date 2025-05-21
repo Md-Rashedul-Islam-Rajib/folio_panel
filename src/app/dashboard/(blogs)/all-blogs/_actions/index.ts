@@ -3,14 +3,14 @@
 import { revalidateTag } from "next/cache";
 
 
-export const getAllProjects = async () => {
+export const getAllBlogs = async () => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER!}/projects`,
+      `${process.env.NEXT_PUBLIC_SERVER!}/blogs`,
       {
         method: "GET",
         next: {
-          tags: ["PROJECTS"],
+          tags: ["BLOGS"],
         },
       }
     );
@@ -23,23 +23,21 @@ export const getAllProjects = async () => {
   }
 };
 
-export const updateProject = async (
+export const updateBlog = async (
   id: string,
   payload: any
 ) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER!}/projects/${id}`,
+      `${process.env.NEXT_PUBLIC_SERVER!}/blogs/${id}`,
       {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+       
+        body: payload,
       }
     );
 
-    revalidateTag("PROJECTS");
+    revalidateTag("BLOGS");
     const data = await res.json();
     return data;
   } catch (error: any) {
@@ -47,13 +45,13 @@ export const updateProject = async (
   }
 };
 
-export const deleteProject = async (id: string) => {
+export const deleteBlog = async (id: string) => {
   try {
     
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER!}/projects/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER!}/blogs/${id}`, {
       method: "DELETE",
     });
-revalidateTag("PROJECTS");
+revalidateTag("BLOGS");
     const data = await res.json();
     return data.data;
   } catch (error: any) {

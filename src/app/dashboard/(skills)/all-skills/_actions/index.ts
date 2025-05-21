@@ -3,14 +3,14 @@
 import { revalidateTag } from "next/cache";
 
 
-export const getAllProjects = async () => {
+export const getAllSkills = async () => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER!}/projects`,
+      `${process.env.NEXT_PUBLIC_SERVER!}/skills`,
       {
         method: "GET",
         next: {
-          tags: ["PROJECTS"],
+          tags: ["SKILLS"],
         },
       }
     );
@@ -23,23 +23,21 @@ export const getAllProjects = async () => {
   }
 };
 
-export const updateProject = async (
+export const updateSkill = async (
   id: string,
   payload: any
 ) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER!}/projects/${id}`,
+      `${process.env.NEXT_PUBLIC_SERVER!}/skills/${id}`,
       {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+        
+        body: payload,
       }
     );
 
-    revalidateTag("PROJECTS");
+    revalidateTag("SKILLS");
     const data = await res.json();
     return data;
   } catch (error: any) {
@@ -47,13 +45,13 @@ export const updateProject = async (
   }
 };
 
-export const deleteProject = async (id: string) => {
+export const deleteSkill = async (id: string) => {
   try {
     
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER!}/projects/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER!}/skills/${id}`, {
       method: "DELETE",
     });
-revalidateTag("PROJECTS");
+revalidateTag("SKILLS");
     const data = await res.json();
     return data.data;
   } catch (error: any) {
