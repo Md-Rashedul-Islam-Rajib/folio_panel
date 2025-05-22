@@ -1,12 +1,13 @@
 import React from 'react'
-import CreateBlogForm from '@/app/dashboard/(blogs)/create-blog/_components/CreateBlogForm';
+import CreateProjectForm from './CreateProjectForm';
 
-const CreateBlogModule = () => {
+
+const CreateProjectModule = () => {
   return (
     <div>
-      <CreateBlogForm />
+      <CreateProjectForm />
     </div>
   );
 }
 
-export default CreateBlogModule
+export default CreateProjectModule

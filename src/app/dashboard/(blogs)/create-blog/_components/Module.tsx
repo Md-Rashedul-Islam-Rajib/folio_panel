@@ -1,7 +1,7 @@
 import React from 'react'
 import CreateBlogForm from './CreateBlogForm'
 
-const CreateProjectModule = () => {
+const CreateBlogModule = () => {
   return (
     <div>
       <CreateBlogForm />
@@ -9,4 +9,4 @@ const CreateProjectModule = () => {
   )
 }
 
-export default CreateProjectModule
+export default CreateBlogModule

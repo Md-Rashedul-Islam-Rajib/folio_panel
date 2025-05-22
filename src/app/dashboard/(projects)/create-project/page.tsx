@@ -2,6 +2,7 @@ import { LoaderCircle } from 'lucide-react';
 import React, { Suspense } from 'react'
 import CreateProjectModule from './_components/Module';
 
+
 const CreateProjectPage = () => {
   return (
     <Suspense
